@@ -4,7 +4,7 @@ import { User } from './schema/users.schema';
 import { createUserDto } from './user.dto/create-user.dto';
 import { UpdateUserDto } from './user.dto/update-user.dto';
 import { Query as ExpressQuery } from 'express-serve-static-core';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Users')
 @Controller('users')
@@ -16,6 +16,7 @@ export class UsersController {
   @Get()
   @ApiResponse({ status: 200, description: 'OK' })
   @ApiResponse({ status: 500, description: 'Internal Server Error' })
+
   async getAllUser(@Query() query: ExpressQuery): Promise<User[]> {
     return this.usersService.findAll(query)
   }
@@ -23,13 +24,14 @@ export class UsersController {
   @Post('new')
   @ApiResponse({ status: 201, description: 'The user has been successfully created.' })
   @ApiResponse({ status: 409, description: 'User already exists' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
   async createUser(@Body() user: createUserDto): Promise<User> {
-
     return this.usersService.createUser(user)
   }
   @Get(':id')
   @ApiResponse({ status: 200, description: 'OK' })
   @ApiResponse({ status: 404, description: 'User not Found' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
   async getUserById(@Param('id') id: string): Promise<User> {
     return this.usersService.findUserById(id)
   }
@@ -37,7 +39,7 @@ export class UsersController {
   @Put(':id')
   @ApiResponse({ status: 200, description: 'OK' })
   @ApiResponse({ status: 404, description: 'User not Found' })
-  // @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
   async updateUser(@Param('id') id: string, @Body() user: UpdateUserDto): Promise<User> {
     return this.usersService.updateUserById(id, user)
   }
@@ -45,6 +47,7 @@ export class UsersController {
   @Delete(':id')
   @ApiResponse({ status: 200, description: 'The user has been successfully delete.' })
   @ApiResponse({ status: 404, description: 'User not Found' })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
   async deleteUserById(@Param('id') id: string): Promise<User> {
     return this.usersService.deleteUserById(id)
   }
