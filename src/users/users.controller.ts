@@ -37,7 +37,7 @@ export class UsersController {
   @Put(':id')
   @ApiResponse({ status: 200, description: 'OK' })
   @ApiResponse({ status: 404, description: 'User not Found' })
-  @ApiResponse({ status: 400, description: 'Bad Request' })
+  // @ApiResponse({ status: 400, description: 'Bad Request' })
   async updateUser(@Param('id') id: string, @Body() user: UpdateUserDto): Promise<User> {
     return this.usersService.updateUserById(id, user)
   }
