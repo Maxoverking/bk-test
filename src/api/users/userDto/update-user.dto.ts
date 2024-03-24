@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { USER_ROLE } from "../schema/users.schema";
-import { IsBoolean, IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsBoolean, IsEmpty, IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
+import { AuthUser } from "src/auth/schema/auth.user.schema";
 
 export class UpdateUserDto {
   @ApiProperty()
@@ -22,5 +23,8 @@ export class UpdateUserDto {
   @IsOptional()
   @IsEnum(USER_ROLE, { message: 'Add Role please' })
   readonly role: USER_ROLE;
+
+  @IsEmpty({ message: "You can not pass User id" })
+  readonly owner: AuthUser;
 
 };

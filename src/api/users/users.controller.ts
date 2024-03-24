@@ -1,10 +1,11 @@
-import { Controller, Body, Param, Delete, Get, Post, Put, Query } from '@nestjs/common';
+import { Controller, Body, Param, Delete, Get, Post, Put, Query, UseGuards, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './schema/users.schema';
-import { createUserDto } from './user.dto/create-user.dto';
-import { UpdateUserDto } from './user.dto/update-user.dto';
+import { CreateUserDto } from './userDto/create-user.dto';
+import { UpdateUserDto } from './userDto/update-user.dto';
 import { Query as ExpressQuery } from 'express-serve-static-core';
-import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Users')
 @Controller('users')
@@ -22,11 +23,15 @@ export class UsersController {
   }
 
   @Post('new')
+  @UseGuards(AuthGuard())
   @ApiResponse({ status: 201, description: 'The user has been successfully created.' })
   @ApiResponse({ status: 409, description: 'User already exists' })
   @ApiResponse({ status: 400, description: 'Bad Request' })
-  async createUser(@Body() user: createUserDto): Promise<User> {
-    return this.usersService.createUser(user)
+  async createUser(@Body() user: CreateUserDto, @Req() owner): Promise<User> {
+
+    // console.log("🚀  req:", owner.user);
+
+    return this.usersService.createUser(user, owner.user)
   }
   @Get(':id')
   @ApiResponse({ status: 200, description: 'OK' })

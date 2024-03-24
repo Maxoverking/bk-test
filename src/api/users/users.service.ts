@@ -5,6 +5,7 @@ import * as mongoose from 'mongoose';
 import { Query } from 'express-serve-static-core';
 import { PaginationPerPage, resUserPerPage } from '../../pagination/pagination';
 import { CustomException } from 'src/exception/exceptions';
+import { AuthUser } from 'src/auth/schema/auth.user.schema';
 
 @Injectable()
 export class UsersService {
@@ -24,13 +25,14 @@ export class UsersService {
     return res;
   }
 
-  async createUser(user: User): Promise<User> {
+  async createUser(user: User, owner: AuthUser): Promise<User> {
+    const data = Object.assign(user, { owner: owner._id })
     const existingUser = await this.userModel.findOne({ name: user.name });
     if (existingUser) {
       throw new ConflictException('User already exists')
     }
 
-    const newUser = await this.userModel.create(user);
+    const newUser = await this.userModel.create(data);
     return newUser;
   }
 

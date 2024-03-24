@@ -1,4 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import mongoose from "mongoose";
+import { AuthUser } from "src/auth/schema/auth.user.schema";
 
 export enum USER_ROLE {
   USER = "USER",
@@ -17,6 +19,8 @@ export class User {
   logined: boolean;
   @Prop()
   role: USER_ROLE;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "AuthUser" })
+  owner: AuthUser;
 
 }
 export const UserSchema = SchemaFactory.createForClass(User)
