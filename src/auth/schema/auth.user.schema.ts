@@ -12,8 +12,6 @@ export class AuthUser extends Document {
 
   @Prop()
   password: string;
-
-
 }
 
 export const AuthUserSchema = SchemaFactory.createForClass(AuthUser)

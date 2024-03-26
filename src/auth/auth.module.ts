@@ -9,8 +9,6 @@ import { ConfigService } from '@nestjs/config';
 import { CustomException } from 'src/exception/exceptions';
 import { JwtStrategy } from './jwt.strategy';
 
-
-
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'AuthUser', schema: AuthUserSchema }]),
