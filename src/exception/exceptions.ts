@@ -1,6 +1,6 @@
-import { BadRequestException, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import * as bcrypt from 'bcryptjs';
+import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import * as mongoose from 'mongoose';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 
 export class CustomException {
@@ -9,6 +9,7 @@ export class CustomException {
     const isValidId = mongoose.isValidObjectId(id);
     if (!isValidId) {
       throw new BadRequestException('Something goes wrong');
+
     }
   }
   isEmaiExist(email: string, existEmail: string) {
