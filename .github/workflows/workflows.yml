@@ -28,3 +28,13 @@ jobs:
 
       - name: Build Nest.js application
         run: npm run build
+  start:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Start application in production mode
+        run: npm run start:prod
