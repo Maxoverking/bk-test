@@ -37,7 +37,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install dependencies
-        run: npm run start:prod
-
-      - name: Start application in production mode
-        run: node dist/main
+        run: npm run start:dev
