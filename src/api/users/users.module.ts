@@ -6,6 +6,7 @@ import { UserSchema } from './schema/users.schema';
 import { PaginationPerPage } from '../../pagination/pagination';
 import { CustomException } from 'src/exception/exceptions';
 import { AuthModule } from '../../auth/auth.module';
+import { TranslateService } from './translate.service';
 
 @Module({
   imports: [
@@ -13,6 +14,6 @@ import { AuthModule } from '../../auth/auth.module';
     AuthModule,
   ],
   controllers: [UsersController],
-  providers: [UsersService, PaginationPerPage, CustomException]
+  providers: [UsersService, PaginationPerPage, CustomException, TranslateService]
 })
 export class UsersModule { }

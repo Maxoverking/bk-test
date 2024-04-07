@@ -8,6 +8,10 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   readonly name: string;
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  readonly name_en: string;
 
   @ApiProperty()
   @IsOptional()

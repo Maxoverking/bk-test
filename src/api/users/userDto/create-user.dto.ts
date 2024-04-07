@@ -9,6 +9,11 @@ export class CreateUserDto {
   @IsString()
   readonly name: string;
 
+  // @ApiProperty()
+  // @IsNotEmpty()
+  // @IsString()
+  readonly name_en: string;
+
   @ApiProperty()
   @IsNumber()
   readonly age: number;

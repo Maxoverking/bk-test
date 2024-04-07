@@ -6,6 +6,7 @@ import { Query } from 'express-serve-static-core';
 import { PaginationPerPage, resUserPerPage } from '../../pagination/pagination';
 import { CustomException } from 'src/exception/exceptions';
 import { AuthUser } from 'src/auth/schema/auth.user.schema';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UsersService {
@@ -14,6 +15,7 @@ export class UsersService {
     private userModel: mongoose.Model<User>,
     private pagination: PaginationPerPage,
     private customException: CustomException,
+    private readonly configService: ConfigService
   ) { }
 
   async findAll(query: Query): Promise<User[]> {
@@ -25,8 +27,9 @@ export class UsersService {
     return res;
   }
 
-  async createUser(user: User, owner: AuthUser): Promise<User> {
-    const data = Object.assign(user, { owner: owner._id })
+  async createUser(user: User, owner: AuthUser, translatedName: string): Promise<User> {
+    const data = { ...user, name_en: translatedName, owner: owner._id }
+
     const existingUser = await this.userModel.findOne({ name: user.name });
     if (existingUser) {
       throw new ConflictException('User already exists')

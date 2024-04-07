@@ -11,6 +11,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import { TranslateService } from './translate.service';
 const imageStorageConfig = {
   storage: diskStorage({
     destination: './upload/images',
@@ -27,7 +28,8 @@ const imageStorageConfig = {
 @Controller('users')
 export class UsersController {
   constructor(
-    private usersService: UsersService
+    private usersService: UsersService,
+    private translateService: TranslateService
   ) { }
 
   @Get()
@@ -46,8 +48,10 @@ export class UsersController {
   async createUser(@Body() user: CreateUserDto, @Req() owner): Promise<User> {
 
     // console.log("🚀  req:", owner.user);
+    const translatedName = await this.translateService.translateText(user.name);
 
-    return this.usersService.createUser(user, owner.user)
+
+    return this.usersService.createUser(user, owner.user, translatedName);
   }
   @Get(':id')
   @ApiResponse({ status: 200, description: 'OK' })

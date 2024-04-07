@@ -14,6 +14,8 @@ export class User {
   @Prop()
   name: string;
   @Prop()
+  name_en: string;
+  @Prop()
   age: number;
   @Prop()
   logined: boolean;
