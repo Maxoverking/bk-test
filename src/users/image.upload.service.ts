@@ -7,7 +7,6 @@ export interface ImageUploadedData {
   url: string, secure_url: string, asset_id: string, public_id: string
 }
 
-
 @Injectable()
 export class ImageUploadService {
   constructor() {
