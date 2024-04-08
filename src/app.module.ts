@@ -3,8 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UsersModule } from './api/users/users.module';
+import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+
+import { ImageUploadModule } from './image-upload/image-upload.module';
 
 
 @Module({
@@ -13,14 +15,11 @@ import { AuthModule } from './auth/auth.module';
       envFilePath: '.env',
       isGlobal: true,
     }),
+
     MongooseModule.forRoot(process.env.MONGO_DB_TEST),
-    // MongooseModule.forRootAsync({
-    //   useFactory: async () => ({
-    //     uri: process.env.MONGO_DB_TEST,
-    //   }),
-    // }),
     UsersModule,
     AuthModule,
+    ImageUploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

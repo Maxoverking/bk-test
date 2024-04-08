@@ -2,6 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { USER_ROLE } from "../schema/users.schema";
 import { IsBoolean, IsEmpty, IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
 import { AuthUser } from "src/auth/schema/auth.user.schema";
+import { ImageUploadedData } from "../image.upload.service";
 
 export class UpdateUserDto {
   @ApiProperty()
@@ -11,7 +12,7 @@ export class UpdateUserDto {
   @ApiProperty()
   @IsOptional()
   @IsString()
-  readonly name_en: string;
+  readonly image_url: ImageUploadedData | string;
 
   @ApiProperty()
   @IsOptional()

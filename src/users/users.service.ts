@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schema/users.schema';
 import * as mongoose from 'mongoose';
 import { Query } from 'express-serve-static-core';
-import { PaginationPerPage, resUserPerPage } from '../../pagination/pagination';
+import { PaginationPerPage, resUserPerPage } from '../pagination/pagination';
 import { CustomException } from 'src/exception/exceptions';
 import { AuthUser } from 'src/auth/schema/auth.user.schema';
 import { ConfigService } from '@nestjs/config';
@@ -27,8 +27,8 @@ export class UsersService {
     return res;
   }
 
-  async createUser(user: User, owner: AuthUser, translatedName: string): Promise<User> {
-    const data = { ...user, name_en: translatedName, owner: owner._id }
+  async createUser(user: User, owner: AuthUser): Promise<User> {
+    const data = { ...user, owner: owner._id }
 
     const existingUser = await this.userModel.findOne({ name: user.name });
     if (existingUser) {
